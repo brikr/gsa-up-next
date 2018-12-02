@@ -1,0 +1,10 @@
+<h1>Intermission</h1>
+<h3>All times Eastern Time (ET)</h3>
+<div *ngIf="events | async; else error">
+  <div *ngFor="let event of (events | async)">
+    {{ event.fromNow }} | {{ event.summary }}
+  </div>
+</div>
+<ng-template #error>
+  TODO(brikr): write a nice message here
+</ng-template>

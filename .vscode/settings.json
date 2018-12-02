@@ -1,0 +1,5 @@
+{
+  "clang-format.executable": "${workspaceRoot}\\node_modules\\clang-format\\bin\\win32\\clang-format",
+  "clang-format.fallbackStyle": "Google",
+  "editor.formatOnSave": true
+}
