@@ -1,5 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import * as moment from 'moment';
+import {Moment} from 'moment';
 import {Observable, of} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 
@@ -8,7 +10,7 @@ export interface CalendarEvents {
 }
 
 export interface CalendarEvent {
-  summary: string, description: string, start: Date, end: Date,
+  summary: string, description: string, start: Moment, end: Moment,
 }
 
 @Injectable()
@@ -44,8 +46,8 @@ export class CalendarService {
             (response: CalendarEvents) => of(response.items.map((item: any) => {
               return {
                 summary: item.summary, description: item.description,
-                    start: new Date(item.start.dateTime),
-                    end: new Date(item.end.dateTime),
+                    start: moment(item.start.dateTime),
+                    end: moment(item.end.dateTime),
               }
             }))));
   }

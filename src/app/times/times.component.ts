@@ -30,8 +30,10 @@ export class TimesComponent implements OnInit {
           this.events = res;
         })
 
-    interval(1000).subscribe(() => {this.events.forEach(e => {
-                               this.fromNow.set(e, moment(e.start).fromNow());
-                             })});
+    interval(1000).subscribe(() => {
+      this.events.forEach(e => {
+        this.fromNow.set(e, e.start.fromNow());
+      });
+    });
   }
 }
