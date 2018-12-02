@@ -1,5 +1,5 @@
 # gsa-up-next
-Simple web page to for the "Intermission" screen during GSA events
+Simple web page to for the "Intermission" screen during GSA events. You can view a live version [here](https://analog-figure-224304.appspot.com/AIzaSyDWyz_0HbtIRkJmd02RLyozUXiwXnJrTAU).
 
 ## Usage
 You can serve the project locally via [Angular CLI](https://cli.angular.io/).
