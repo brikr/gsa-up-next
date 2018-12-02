@@ -28,12 +28,28 @@ export class TimesComponent implements OnInit {
                 this.calendarService.getTodayEvents(params.get('apiKey'))))
         .subscribe(res => {
           this.events = res;
+          this.updateFromNow();
         })
 
     interval(1000).subscribe(() => {
-      this.events.forEach(e => {
+      this.updateFromNow();
+    });
+  }
+
+  updateFromNow() {
+    let past = true;
+    this.events.forEach(e => {
+      const middle = moment.unix((e.start.unix() + e.end.unix()) / 2)
+      if (past && middle.isAfter()) {
+        // set the first future event to "Up next". Base this off the middle
+        // of each event so we don't see oddities with slightly early or late
+        // intermissions.
+        past = false;
+        this.fromNow.set(e, 'Up next')
+      }
+      else {
         this.fromNow.set(e, e.start.fromNow());
-      });
+      }
     });
   }
 }
