@@ -1,3 +1,4 @@
+import {NgClass} from '@angular/common';
 import {OnInit} from '@angular/core';
 import {Component} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
@@ -7,6 +8,17 @@ import {switchMap} from 'rxjs/operators';
 
 import {CalendarEvent, CalendarService} from '../calendar.service';
 
+enum FromNowStatus {
+  PAST,
+  UP_NEXT,
+  FUTURE
+}
+
+interface EventStatus {
+  fromNow: string;
+  status: FromNowStatus;
+}
+
 @Component({
   selector: 'gsa-times',
   templateUrl: 'times.component.html',
@@ -14,7 +26,10 @@ import {CalendarEvent, CalendarService} from '../calendar.service';
 })
 export class TimesComponent implements OnInit {
   events: CalendarEvent[] = [];
-  fromNow: Map<CalendarEvent, string> = new Map();
+  eventStatus: Map<CalendarEvent, EventStatus> = new Map();
+
+  // put enum in template scope
+  FromNowStatus = FromNowStatus;
 
   constructor(
       private readonly route: ActivatedRoute,
@@ -45,10 +60,16 @@ export class TimesComponent implements OnInit {
         // of each event so we don't see oddities with slightly early or late
         // intermissions.
         past = false;
-        this.fromNow.set(e, 'Up next')
+        this.eventStatus.set(e, {
+          fromNow: 'Up next',
+          status: FromNowStatus.UP_NEXT,
+        })
       }
       else {
-        this.fromNow.set(e, e.start.fromNow());
+        this.eventStatus.set(e, {
+          fromNow: e.start.fromNow(),
+          status: past ? FromNowStatus.PAST : FromNowStatus.FUTURE,
+        });
       }
     });
   }
