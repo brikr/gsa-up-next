@@ -12,7 +12,7 @@ import {CalendarEvent, CalendarService} from '../calendar.service';
   styleUrls: ['times.component.scss'],
 })
 export class TimesComponent implements OnInit {
-  events: Observable<CalendarEvent[]>;
+  events: CalendarEvent[];
 
   constructor(
       private readonly route: ActivatedRoute,
@@ -20,8 +20,12 @@ export class TimesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.events = this.route.paramMap.pipe(switchMap(
-        (params: ParamMap) =>
-            this.calendarService.getTodayEvents(params.get('apiKey'))))
+    this.route.paramMap
+        .pipe(switchMap(
+            (params: ParamMap) =>
+                this.calendarService.getTodayEvents(params.get('apiKey'))))
+        .subscribe(res => {
+          this.events = res;
+        })
   }
 }
