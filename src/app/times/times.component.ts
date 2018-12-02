@@ -1,7 +1,8 @@
 import {OnInit} from '@angular/core';
 import {Component} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
-import {Observable} from 'rxjs';
+import * as moment from 'moment';
+import {interval} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 
 import {CalendarEvent, CalendarService} from '../calendar.service';
@@ -12,7 +13,8 @@ import {CalendarEvent, CalendarService} from '../calendar.service';
   styleUrls: ['times.component.scss'],
 })
 export class TimesComponent implements OnInit {
-  events: CalendarEvent[];
+  events: CalendarEvent[] = [];
+  fromNow: Map<CalendarEvent, string> = new Map();
 
   constructor(
       private readonly route: ActivatedRoute,
@@ -27,5 +29,9 @@ export class TimesComponent implements OnInit {
         .subscribe(res => {
           this.events = res;
         })
+
+    interval(1000).subscribe(() => {this.events.forEach(e => {
+                               this.fromNow.set(e, moment(e.start).fromNow());
+                             })});
   }
 }

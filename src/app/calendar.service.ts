@@ -1,6 +1,5 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import * as moment from 'moment';
 import {Observable, of} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 
@@ -9,7 +8,7 @@ export interface CalendarEvents {
 }
 
 export interface CalendarEvent {
-  summary: string, description: string, start: Date, end: Date, fromNow: string,
+  summary: string, description: string, start: Date, end: Date,
 }
 
 @Injectable()
@@ -22,8 +21,13 @@ export class CalendarService {
     }
     const tomorrow = new Date();
     tomorrow.setDate(date.getDate() + 1);
-    date.setUTCHours(-12, 0, 0);
-    tomorrow.setUTCHours(-12, 0, 0);
+    if (date.getUTCHours() > 12) {
+      date.setUTCHours(12, 0, 0);
+      tomorrow.setUTCHours(12, 0, 0);
+    } else {
+      date.setUTCHours(-12, 0, 0);
+      tomorrow.setUTCHours(-12, 0, 0);
+    }
     return this.httpClient
         .get(
             'https://www.googleapis.com/calendar/v3/calendars/globalspeedrun@gmail.com/events',
@@ -42,7 +46,6 @@ export class CalendarService {
                 summary: item.summary, description: item.description,
                     start: new Date(item.start.dateTime),
                     end: new Date(item.end.dateTime),
-                    fromNow: moment(item.start.dateTime).fromNow(),
               }
             }))));
   }
