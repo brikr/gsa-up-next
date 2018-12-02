@@ -1,7 +1,9 @@
 <div *ngIf="events; else error">
   <div class="event" *ngFor="let event of events">
-    <span>{{ fromNow.get(event) }}: </span>
-    <span>{{ event.summary }}</span>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div>{{ fromNow.get(event) }}: </div>
+      <div>{{ event.summary }}</div>
+    </div>
   </div>
 </div>
 <ng-template #error>
