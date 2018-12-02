@@ -6,15 +6,15 @@ skip_files:
 - ^(?!dist)  # Skip any files not in the dist folder
 
 handlers:
-# Routing for bundles to serve directly
+# Routing for bundles and sourcemaps to serve directly
 - url: /((?:main|polyfills|runtime|styles|vendor)\.(?:js|map))
   secure: always
   redirect_http_response_code: 301
   static_files: dist/\1
   upload: dist/.*
 
-# Routing for typedoc, assets and favicon.ico to serve directly
-- url: /favicon\.ico
+# Routing for font and favicon.ico to serve directly
+- url: /(Dispence\.otf|favicon\.ico)
   secure: always
   redirect_http_response_code: 301
   static_files: dist/\1
