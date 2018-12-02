@@ -22,6 +22,8 @@ export class CalendarService {
     }
     const tomorrow = new Date();
     tomorrow.setDate(date.getDate() + 1);
+    date.setUTCHours(-12, 0, 0);
+    tomorrow.setUTCHours(-12, 0, 0);
     return this.httpClient
         .get(
             'https://www.googleapis.com/calendar/v3/calendars/globalspeedrun@gmail.com/events',
