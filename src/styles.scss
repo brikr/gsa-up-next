@@ -1,6 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+SC:400,700,900');
+
+@font-face {
+  font-family: Dispence;
+  src: url("assets/Dispence.otf") format("openType");
+}
 
 body {
-  background: #212121; // mat-grey-900
+  background: #212121; // mat-blue-grey-700
 }

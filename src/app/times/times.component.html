@@ -1,8 +1,7 @@
-<h1>Intermission</h1>
-<h3>All times Eastern Time (ET)</h3>
+<div class="subtitle">All times Eastern Time (ET)</div>
 <div *ngIf="events; else error">
-  <div *ngFor="let event of events">
-    <span class="from-now">{{ event.fromNow }}: </span>
+  <div class="event" *ngFor="let event of events">
+    <span>{{ event.fromNow }}: </span>
     <span>{{ event.summary }}</span>
   </div>
 </div>
