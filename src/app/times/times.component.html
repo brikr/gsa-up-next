@@ -2,9 +2,12 @@
 <h3>All times Eastern Time (ET)</h3>
 <div *ngIf="events | async; else error">
   <div *ngFor="let event of (events | async)">
-    {{ event.fromNow }} | {{ event.summary }}
+    <span class="from-now">{{ event.fromNow }}: </span>
+    <span>{{ event.summary }}</span>
   </div>
 </div>
 <ng-template #error>
-  TODO(brikr): write a nice message here
+  <div>
+    TODO(brikr): write a nice message here
+  </div>
 </ng-template>

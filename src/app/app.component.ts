@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 @Component({
   selector: 'gsa-root',
   templateUrl: 'app.component.html',
-  styles: [],
+  styleUrls: [],
 })
 export class AppComponent {
 }
