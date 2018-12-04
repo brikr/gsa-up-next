@@ -5,12 +5,22 @@ import {Moment} from 'moment';
 import {Observable, of} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 
-export interface CalendarEvents {
-  items: CalendarEvent[],
+export interface CalendarEvent {
+  summary: string;
+  description: string;
+  start: Moment;
+  end: Moment;
 }
 
-export interface CalendarEvent {
-  summary: string, description: string, start: Moment, end: Moment,
+interface APICalendarEvents {
+  items: APICalendarEvent[];
+}
+
+interface APICalendarEvent {
+  summary: string;
+  description: string;
+  start: {dateTime: string;};
+  end: {dateTime: string;};
 }
 
 @Injectable()
@@ -31,11 +41,11 @@ export class CalendarService {
       tomorrow.setUTCHours(-12, 0, 0);
     }
     return this.httpClient
-        .get(
+        .get<APICalendarEvents>(
             'https://www.googleapis.com/calendar/v3/calendars/globalspeedrun@gmail.com/events',
             {
               params: {
-                key: key,
+                key,
                 orderBy: 'startTime',
                 singleEvents: 'true',
                 timeMin: date.toISOString(),
@@ -43,12 +53,13 @@ export class CalendarService {
               }
             })
         .pipe(switchMap(
-            (response: CalendarEvents) => of(response.items.map((item: any) => {
+            (response: APICalendarEvents) => of(response.items.map(item => {
               return {
-                summary: item.summary, description: item.description,
-                    start: moment(item.start.dateTime),
-                    end: moment(item.end.dateTime),
-              }
+                summary: item.summary,
+                description: item.description,
+                start: moment(item.start.dateTime),
+                end: moment(item.end.dateTime),
+              };
             }))));
   }
 }
