@@ -98,7 +98,7 @@ export class TimesComponent implements OnInit {
     // we don't have to worry about being within one hour here because this
     // screen will show until the stream is done for the day, which isn't very
     // long.
-    if (past) {
+    if (past && this.events.length) {
       this.eventStatus.set(this.events[this.events.length - 1], {
         fromNow: 'Just finished',
         status: FromNowStatus.PAST,
