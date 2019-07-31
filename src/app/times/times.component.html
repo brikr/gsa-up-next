@@ -1,9 +1,8 @@
 <div *ngIf="events; else error">
-  <div class="event" *ngFor="let event of events">
-    <div fxLayout="row" fxLayoutAlign="space-between center" [ngClass]="{'up-next': eventStatus.get(event).status === FromNowStatus.UP_NEXT, 'past': eventStatus.get(event).status === FromNowStatus.PAST}">
-      <span>{{ eventStatus.get(event).fromNow }}</span>
-      <span class="summary">{{ event.summary }}</span>
-    </div>
+  <div class="event" *ngFor="let event of events"
+    [ngClass]="{'up-next': eventStatus.get(event).status === FromNowStatus.UP_NEXT, 'past': eventStatus.get(event).status === FromNowStatus.PAST}">
+    <span>{{ eventStatus.get(event).fromNow }}</span>
+    <span class="summary">{{ event.summary }}</span>
   </div>
 </div>
 <ng-template #error>

@@ -5,6 +5,10 @@ div {
 
 .event {
   margin-bottom: 20px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .past {
