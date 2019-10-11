@@ -17,7 +17,6 @@ gcloud app deploy
 ## Generating Google Cloud API Keys
 To create an API key, your account must be granted the Editor role (`roles/editor`) on the Google Cloud project. You can view project roles on the [IAM & admin](https://console.cloud.google.com/iam-admin/iam) page.
 
-
 ### To create an API key:
 You will need to first enable the Google Calendar API for your project.
 1. Go to the [Google Calendar API](https://console.cloud.google.com/apis/library/calendar-json.googleapis.com) page and click `Enable`.
