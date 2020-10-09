@@ -1,10 +1,8 @@
-import {OnInit} from '@angular/core';
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import * as moment from 'moment';
 import {interval} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
-
 import {CalendarEvent, CalendarService} from '../calendar.service';
 
 enum FromNowStatus {
