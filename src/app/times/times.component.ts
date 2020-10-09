@@ -1,4 +1,3 @@
-import {NgClass} from '@angular/common';
 import {OnInit} from '@angular/core';
 import {Component} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
@@ -11,7 +10,7 @@ import {CalendarEvent, CalendarService} from '../calendar.service';
 enum FromNowStatus {
   PAST,
   UP_NEXT,
-  FUTURE
+  FUTURE,
 }
 
 interface EventStatus {
@@ -37,19 +36,21 @@ export class TimesComponent implements OnInit {
   FromNowStatus = FromNowStatus;
 
   constructor(
-      private readonly route: ActivatedRoute,
-      private readonly calendarService: CalendarService,
+    private readonly route: ActivatedRoute,
+    private readonly calendarService: CalendarService
   ) {}
 
   ngOnInit() {
     this.route.paramMap
-        .pipe(switchMap(
-            (params: ParamMap) =>
-                this.calendarService.getTodayEvents(params.get('apiKey')!)))
-        .subscribe(res => {
-          this.events = res;
-          this.updateStatus();
-        });
+      .pipe(
+        switchMap((params: ParamMap) =>
+          this.calendarService.getTodayEvents(params.get('apiKey')!)
+        )
+      )
+      .subscribe(res => {
+        this.events = res;
+        this.updateStatus();
+      });
 
     interval(1000).subscribe(() => {
       this.updateStatus();
@@ -69,10 +70,10 @@ export class TimesComponent implements OnInit {
   // event, not the start time. This allows us some room for early/late
   // intermissions.
   updateStatus() {
-    let past = true;    // Whether we are currently iterating past an event that
-                        // is in the past
-    let preCount = 0;   // Number of events before the "Up next" event
-    let postCount = 0;  // Number of events after the "Up next" event
+    let past = true; // Whether we are currently iterating past an event that
+    // is in the past
+    let preCount = 0; // Number of events before the "Up next" event
+    let postCount = 0; // Number of events after the "Up next" event
     this.events.forEach((e, i) => {
       const middle = moment.unix((e.start.unix() + e.end.unix()) / 2);
       if (past) {
@@ -88,8 +89,10 @@ export class TimesComponent implements OnInit {
             fromNow: 'Up next',
             status: FromNowStatus.UP_NEXT,
           });
-          if (i > 0 &&
-              this.events[i - 1].end.isAfter(moment().subtract(1, 'hour'))) {
+          if (
+            i > 0 &&
+            this.events[i - 1].end.isAfter(moment().subtract(1, 'hour'))
+          ) {
             this.eventStatus.set(this.events[i - 1], {
               fromNow: 'Just finished',
               status: FromNowStatus.PAST,
@@ -128,7 +131,7 @@ export class TimesComponent implements OnInit {
         return;
       }
 
-      const halfMax = (MAX_EVENTS_LENGTH - 1) / 2;  // e.g. 7 -> 3
+      const halfMax = (MAX_EVENTS_LENGTH - 1) / 2; // e.g. 7 -> 3
       if (preCount <= halfMax && postCount > halfMax) {
         // 2. preCount less than or equal to half, and postCount greater than
         // half. Trim off the end
@@ -149,8 +152,10 @@ export class TimesComponent implements OnInit {
         // Trim both down to halfMax
         const frontTrim = preCount - halfMax;
         const backTrim = postCount - halfMax;
-        this.events =
-            this.events.slice(frontTrim, this.events.length - backTrim);
+        this.events = this.events.slice(
+          frontTrim,
+          this.events.length - backTrim
+        );
       }
     }
   }

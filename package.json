@@ -6,15 +6,15 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "gts lint",
     "e2e": "ng e2e",
     "check": "gts check",
     "clean": "gts clean",
-    "compile": "tsc -p .",
+    "compile": "tsc",
     "fix": "gts fix",
     "prepare": "npm run compile",
     "pretest": "npm run compile",
-    "posttest": "npm run check"
+    "posttest": "npm run lint"
   },
   "private": true,
   "dependencies": {
@@ -38,11 +38,11 @@
     "@angular/cli": "^9.1.12",
     "@angular/compiler-cli": "~9.1.12",
     "@angular/language-service": "~9.1.12",
-    "@types/node": "^12.12.31",
+    "@types/node": "^14.11.2",
     "clang-format": "^1.2.4",
     "gts": "^3.0.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.8.3"
+    "typescript": "^4.0.3"
   }
 }

@@ -8,19 +8,9 @@ import {CalendarService} from './calendar.service';
 import {TimesComponent} from './times/times.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TimesComponent,
-  ],
-  imports: [
-    AppRoutingModule,
-    BrowserModule,
-    HttpClientModule,
-  ],
-  providers: [
-    CalendarService,
-  ],
-  bootstrap: [AppComponent]
+  declarations: [AppComponent, TimesComponent],
+  imports: [AppRoutingModule, BrowserModule, HttpClientModule],
+  providers: [CalendarService],
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}
