@@ -35,18 +35,11 @@ export class TimesComponent implements OnInit {
   // put enum in template scope
   FromNowStatus = FromNowStatus;
 
-  constructor(
-    private readonly route: ActivatedRoute,
-    private readonly calendarService: CalendarService
-  ) {}
+  constructor(private readonly route: ActivatedRoute, private readonly calendarService: CalendarService) {}
 
   ngOnInit() {
     this.route.paramMap
-      .pipe(
-        switchMap((params: ParamMap) =>
-          this.calendarService.getTodayEvents(params.get('apiKey')!)
-        )
-      )
+      .pipe(switchMap((params: ParamMap) => this.calendarService.getTodayEvents(params.get('apiKey')!)))
       .subscribe(res => {
         this.events = res;
         this.updateStatus();
@@ -89,10 +82,7 @@ export class TimesComponent implements OnInit {
             fromNow: 'Up next',
             status: FromNowStatus.UP_NEXT,
           });
-          if (
-            i > 0 &&
-            this.events[i - 1].end.isAfter(moment().subtract(1, 'hour'))
-          ) {
+          if (i > 0 && this.events[i - 1].end.isAfter(moment().subtract(1, 'hour'))) {
             this.eventStatus.set(this.events[i - 1], {
               fromNow: 'Just finished',
               status: FromNowStatus.PAST,
@@ -152,10 +142,7 @@ export class TimesComponent implements OnInit {
         // Trim both down to halfMax
         const frontTrim = preCount - halfMax;
         const backTrim = postCount - halfMax;
-        this.events = this.events.slice(
-          frontTrim,
-          this.events.length - backTrim
-        );
+        this.events = this.events.slice(frontTrim, this.events.length - backTrim);
       }
     }
   }
