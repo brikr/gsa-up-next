@@ -19,8 +19,8 @@ interface APICalendarEvents {
 interface APICalendarEvent {
   summary: string;
   description: string;
-  start: {dateTime: string;};
-  end: {dateTime: string;};
+  start: {dateTime: string};
+  end: {dateTime: string};
 }
 
 @Injectable()
@@ -41,25 +41,28 @@ export class CalendarService {
       tomorrow.setUTCHours(-12, 0, 0);
     }
     return this.httpClient
-        .get<APICalendarEvents>(
-            'https://www.googleapis.com/calendar/v3/calendars/globalspeedrun@gmail.com/events',
-            {
-              params: {
-                key,
-                orderBy: 'startTime',
-                singleEvents: 'true',
-                timeMin: date.toISOString(),
-                timeMax: tomorrow.toISOString(),
-              }
-            })
-        .pipe(switchMap(
-            (response: APICalendarEvents) => of(response.items.map(item => {
+      .get<APICalendarEvents>('https://www.googleapis.com/calendar/v3/calendars/globalspeedrun@gmail.com/events', {
+        params: {
+          key,
+          orderBy: 'startTime',
+          singleEvents: 'true',
+          timeMin: date.toISOString(),
+          timeMax: tomorrow.toISOString(),
+        },
+      })
+      .pipe(
+        switchMap((response: APICalendarEvents) =>
+          of(
+            response.items.map(item => {
               return {
                 summary: item.summary,
                 description: item.description,
                 start: moment(item.start.dateTime),
                 end: moment(item.end.dateTime),
               };
-            }))));
+            }),
+          ),
+        ),
+      );
   }
 }
