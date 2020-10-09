@@ -19,7 +19,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~10.1.5",
-    "@angular/cdk": "^8.1.2",
+    "@angular/cdk": "^10.2.4",
     "@angular/common": "~10.1.5",
     "@angular/compiler": "~10.1.5",
     "@angular/core": "~10.1.5",
@@ -42,7 +42,6 @@
     "clang-format": "^1.2.4",
     "gts": "^3.0.0",
     "ts-node": "~7.0.0",
-    "tslint": "~6.1.0",
     "typescript": "^4.0.3"
   }
 }
