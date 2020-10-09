@@ -41,18 +41,15 @@ export class CalendarService {
       tomorrow.setUTCHours(-12, 0, 0);
     }
     return this.httpClient
-      .get<APICalendarEvents>(
-        'https://www.googleapis.com/calendar/v3/calendars/globalspeedrun@gmail.com/events',
-        {
-          params: {
-            key,
-            orderBy: 'startTime',
-            singleEvents: 'true',
-            timeMin: date.toISOString(),
-            timeMax: tomorrow.toISOString(),
-          },
-        }
-      )
+      .get<APICalendarEvents>('https://www.googleapis.com/calendar/v3/calendars/globalspeedrun@gmail.com/events', {
+        params: {
+          key,
+          orderBy: 'startTime',
+          singleEvents: 'true',
+          timeMin: date.toISOString(),
+          timeMax: tomorrow.toISOString(),
+        },
+      })
       .pipe(
         switchMap((response: APICalendarEvents) =>
           of(
@@ -63,9 +60,9 @@ export class CalendarService {
                 start: moment(item.start.dateTime),
                 end: moment(item.end.dateTime),
               };
-            })
-          )
-        )
+            }),
+          ),
+        ),
       );
   }
 }
